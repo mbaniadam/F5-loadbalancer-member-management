@@ -1,0 +1,4 @@
+member_name,pool_name,action,force_offline
+member2,pool_one,enable,no
+member2,pool_one,disable,yes
+member3,pool_one,disable,no
