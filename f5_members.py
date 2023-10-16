@@ -10,23 +10,6 @@ os.chdir(os.path.dirname(os.path.abspath(sys.argv[0])))
 path = os.getcwd()
 print(path)
 
-# Constants
-HTTPS_HOST = 'https://'
-F5_HOST = input("Enter IP address of F5 Host: ")
-F5_HOST = HTTPS_HOST+F5_HOST
-PARTITION = input("Enter partition name: ")
-USERNAME = input("Enter Username: ")
-PASSWORD = getpass.getpass("Enter Password: ")
-# Disable SSL warnings
-urllib3.disable_warnings()
-
-# Authenticate with the F5
-session = requests.Session()
-session.auth = (USERNAME, PASSWORD)
-session.verify = False
-session.headers.update({'Content-Type': 'application/json'})
-
-
 def get_members(pool_name):
     endpoint_url = f"{F5_HOST}/mgmt/tm/ltm/pool/~{PARTITION}~{pool_name}/members/"
     response = session.get(endpoint_url)
@@ -119,6 +102,20 @@ def main():
         print(f"An unexpected error occurred: {e}")
     
 if __name__ == "__main__":
+    # Constants
+    HTTPS_HOST = 'https://'
+    F5_HOST = input("Enter IP address of F5 Host: ")
+    F5_HOST = HTTPS_HOST+F5_HOST
+    PARTITION = input("Enter partition name: ")
+    USERNAME = input("Enter Username: ")
+    PASSWORD = getpass.getpass("Enter Password: ")
+    # Disable SSL warnings
+    urllib3.disable_warnings()
+    # Authenticate with the F5
+    session = requests.Session()
+    session.auth = (USERNAME, PASSWORD)
+    session.verify = False
+    session.headers.update({'Content-Type': 'application/json'})
     print("""
     ==================================================
     Welcome to the F5 Load Balancer Member Management
